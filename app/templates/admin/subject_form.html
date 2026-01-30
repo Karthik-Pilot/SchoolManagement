@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - School Management{% endblock %}
+{% block content %}
+<div class="max-w-lg">
+    <h1 class="text-2xl font-bold text-slate-900 mb-6">{{ title }}</h1>
+    <form method="post" class="bg-white rounded-lg shadow border border-slate-100 p-6 space-y-4">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Subject Name</label>
+            {{ form.name(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+        </div>
+        <div>
+            <label for="code" class="block text-sm font-medium text-slate-700 mb-1">Code</label>
+            {{ form.code(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+        </div>
+        <div class="flex gap-2 pt-2">
+            <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save</button>
+            <a href="{{ url_for('admin.subject_list') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Exams - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Exams & Tests</h1>
+    <a href="{{ url_for('exams.create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Add Exam</a>
+</div>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Type</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Class</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Subject</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Date</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for e in exams %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3 text-slate-900">{{ e.name }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ e.exam_type }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ e.school_class.name if e.school_class else '-' }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ e.subject.name if e.subject else '-' }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ e.exam_date.strftime('%Y-%m-%d') if e.exam_date else '-' }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('exams.detail', exam_id=e.id) }}" class="text-primary-600 hover:underline mr-2">View</a>
+                    <a href="{{ url_for('exams.enter_results', exam_id=e.id) }}" class="text-primary-600 hover:underline mr-2">Enter Results</a>
+                    <a href="{{ url_for('exams.edit', exam_id=e.id) }}" class="text-primary-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

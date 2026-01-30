@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Fees - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Fees</h1>
+    <div class="flex gap-2">
+        <a href="{{ url_for('fees.structure_create') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Add Fee Structure</a>
+        <a href="{{ url_for('fees.payment_create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Record Payment</a>
+        <a href="{{ url_for('fees.payment_list') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">View Payments</a>
+    </div>
+</div>
+<h2 class="text-lg font-semibold text-slate-800 mb-2">Fee Structure</h2>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Class</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Fee Type</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Amount</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Year</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Term</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for s in structures %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3">{{ s.school_class.name if s.school_class else '-' }}</td>
+                <td class="px-4 py-3">{{ s.fee_type }}</td>
+                <td class="px-4 py-3">{{ s.amount }}</td>
+                <td class="px-4 py-3">{{ s.academic_year }}</td>
+                <td class="px-4 py-3">{{ s.term or '-' }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('fees.structure_edit', struct_id=s.id) }}" class="text-primary-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="px-4 py-3 text-slate-500">No fee structures. Add one to get started.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

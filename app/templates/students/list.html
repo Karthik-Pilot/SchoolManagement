@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Students - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Students</h1>
+    <div class="flex gap-2">
+        <a href="{{ url_for('students.mark_attendance') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Mark Attendance</a>
+        <a href="{{ url_for('students.create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Add Student</a>
+    </div>
+</div>
+<form method="get" class="mb-4 flex flex-wrap gap-2 items-center">
+    <select name="class_id" class="rounded-lg border border-slate-300 px-3 py-2">
+        <option value="">All classes</option>
+        {% for c in classes %}
+        <option value="{{ c.id }}" {{ 'selected' if class_filter == c.id }}>{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="section" placeholder="Section" value="{{ section_filter or '' }}" class="rounded-lg border border-slate-300 px-3 py-2">
+    <button type="submit" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Filter</button>
+</form>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Admission No</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Class</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Section</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for s in students %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3 text-slate-900">{{ s.admission_no }}</td>
+                <td class="px-4 py-3 text-slate-900">{{ s.full_name }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ s.school_class.name if s.school_class else '-' }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ s.section or '-' }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('students.detail', student_id=s.id) }}" class="text-primary-600 hover:underline mr-2">View</a>
+                    <a href="{{ url_for('students.edit', student_id=s.id) }}" class="text-primary-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

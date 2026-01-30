@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Classes - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Classes</h1>
+    <a href="{{ url_for('admin.class_create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Add Class</a>
+</div>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Academic Year</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for c in classes %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3 text-slate-900">{{ c.name }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ c.academic_year }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('admin.class_edit', class_id=c.id) }}" class="text-primary-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

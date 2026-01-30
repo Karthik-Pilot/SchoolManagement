@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - School Management{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Admin Dashboard</h1>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <a href="{{ url_for('admin.user_list') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Users</span>
+        <p class="text-sm text-slate-600 mt-1">Manage users and roles</p>
+    </a>
+    <a href="{{ url_for('admin.class_list') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Classes</span>
+        <p class="text-sm text-slate-600 mt-1">Class list and academic year</p>
+    </a>
+    <a href="{{ url_for('admin.subject_list') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Subjects</span>
+        <p class="text-sm text-slate-600 mt-1">Subject list and codes</p>
+    </a>
+    <a href="{{ url_for('students.index') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Students</span>
+        <p class="text-sm text-slate-600 mt-1">Students, attendance, exams</p>
+    </a>
+    <a href="{{ url_for('teachers.index') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Teachers</span>
+        <p class="text-sm text-slate-600 mt-1">Staff and attendance</p>
+    </a>
+    <a href="{{ url_for('fees.index') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Fees</span>
+        <p class="text-sm text-slate-600 mt-1">Fee structure and payments</p>
+    </a>
+    <a href="{{ url_for('exams.index') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Exams</span>
+        <p class="text-sm text-slate-600 mt-1">Exams, tests and results</p>
+    </a>
+    <a href="{{ url_for('reports.index') }}" class="bg-white rounded-lg shadow border border-slate-100 p-4 hover:border-primary-600 transition">
+        <span class="font-medium text-slate-900">Reports</span>
+        <p class="text-sm text-slate-600 mt-1">Attendance, performance, fees</p>
+    </a>
+</div>
+{% endblock %}

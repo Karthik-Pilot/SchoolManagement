@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Reports - School Management{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Reports</h1>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <a href="{{ url_for('reports.attendance') }}" class="bg-white rounded-lg shadow border border-slate-100 p-6 hover:border-primary-600 transition block">
+        <span class="font-medium text-slate-900 block">Student Attendance</span>
+        <p class="text-sm text-slate-600 mt-1">Weekly, monthly and yearly attendance with export to CSV.</p>
+    </a>
+    <a href="{{ url_for('reports.exam_performance') }}" class="bg-white rounded-lg shadow border border-slate-100 p-6 hover:border-primary-600 transition block">
+        <span class="font-medium text-slate-900 block">Exam Results & Performance</span>
+        <p class="text-sm text-slate-600 mt-1">Student-wise or class-wise exam results. Export CSV.</p>
+    </a>
+    <a href="{{ url_for('reports.fees_collected') }}" class="bg-white rounded-lg shadow border border-slate-100 p-6 hover:border-primary-600 transition block">
+        <span class="font-medium text-slate-900 block">Fees Collected</span>
+        <p class="text-sm text-slate-600 mt-1">By year/quarter and class. Collected vs expected. Export CSV.</p>
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Performance - {{ student.full_name }}{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Performance - {{ student.full_name }}</h1>
+{% if average is not none %}
+<p class="text-slate-600 mb-4">Average marks: {{ "%.2f"|format(average) }} (from {{ count }} exam(s) with marks)</p>
+{% endif %}
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100 mb-4">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Exam</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Subject</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Marks</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Grade</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for r in records %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3">{{ r.exam.name if r.exam else '-' }}</td>
+                <td class="px-4 py-3">{{ r.exam.subject.name if r.exam and r.exam.subject else '-' }}</td>
+                <td class="px-4 py-3">{{ r.marks_obtained if r.marks_obtained is not none else '-' }}</td>
+                <td class="px-4 py-3">{{ r.grade or '-' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="px-4 py-3 text-slate-500">No exam results yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{{ url_for('students.detail', student_id=student.id) }}" class="text-primary-600 hover:underline">Back to student</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - School Management{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">{{ title }}</h1>
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 p-6 max-w-lg space-y-4">
+    {{ form.hidden_tag() }}
+    <div>
+        <label for="student_id" class="block text-sm font-medium text-slate-700 mb-1">Student</label>
+        {{ form.student_id(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="fee_structure_id" class="block text-sm font-medium text-slate-700 mb-1">Fee Structure</label>
+        {{ form.fee_structure_id(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="amount_paid" class="block text-sm font-medium text-slate-700 mb-1">Amount Paid</label>
+        {{ form.amount_paid(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="payment_date" class="block text-sm font-medium text-slate-700 mb-1">Payment Date</label>
+        {{ form.payment_date(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="receipt_no" class="block text-sm font-medium text-slate-700 mb-1">Receipt No</label>
+        {{ form.receipt_no(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="payment_mode" class="block text-sm font-medium text-slate-700 mb-1">Payment Mode</label>
+        {{ form.payment_mode(class="w-full rounded-lg border border-slate-300 px-3 py-2", placeholder="e.g. cash, card") }}
+    </div>
+    <div class="flex gap-2 pt-2">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save</button>
+        <a href="{{ url_for('fees.payment_list') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Cancel</a>
+    </div>
+</form>
+{% endblock %}

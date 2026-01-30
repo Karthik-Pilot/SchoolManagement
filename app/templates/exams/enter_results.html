@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Enter Results - {{ exam.name }}{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Enter Results - {{ exam.name }}</h1>
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 overflow-hidden">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Admission No</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Marks</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Grade</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Remarks</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for s in students %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3">{{ s.admission_no }}</td>
+                <td class="px-4 py-3">{{ s.full_name }}</td>
+                <td class="px-4 py-3"><input type="text" name="marks_{{ s.id }}" value="{{ s._result.marks_obtained if s._result else '' }}" class="rounded border px-2 py-1 w-20"></td>
+                <td class="px-4 py-3"><input type="text" name="grade_{{ s.id }}" value="{{ s._result.grade if s._result else '' }}" class="rounded border px-2 py-1 w-16"></td>
+                <td class="px-4 py-3"><input type="text" name="remarks_{{ s.id }}" value="{{ s._result.remarks if s._result else '' }}" class="rounded border px-2 py-1 w-32"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="p-4 bg-slate-50">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save Results</button>
+        <a href="{{ url_for('exams.detail', exam_id=exam.id) }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300 ml-2">Cancel</a>
+    </div>
+</form>
+{% endblock %}

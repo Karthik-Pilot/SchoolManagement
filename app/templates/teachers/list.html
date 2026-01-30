@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Teachers - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Teachers</h1>
+    <div class="flex gap-2">
+        <a href="{{ url_for('teachers.mark_attendance') }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Mark Attendance</a>
+        <a href="{{ url_for('teachers.create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Add Teacher</a>
+    </div>
+</div>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Employee ID</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Email</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for t in teachers %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3 text-slate-900">{{ t.employee_id }}</td>
+                <td class="px-4 py-3 text-slate-900">{{ t.full_name }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ t.email or '-' }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('teachers.detail', teacher_id=t.id) }}" class="text-primary-600 hover:underline mr-2">View</a>
+                    <a href="{{ url_for('teachers.edit', teacher_id=t.id) }}" class="text-primary-600 hover:underline mr-2">Edit</a>
+                    <a href="{{ url_for('teachers.edit_subjects', teacher_id=t.id) }}" class="text-primary-600 hover:underline">Subjects</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

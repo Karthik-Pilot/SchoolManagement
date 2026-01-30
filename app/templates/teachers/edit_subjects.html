@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Edit Subjects - {{ teacher.full_name }}{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Edit Subjects - {{ teacher.full_name }}</h1>
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 p-6">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="space-y-2">
+        {% for s in all_subjects %}
+        <label class="flex items-center gap-2">
+            <input type="checkbox" name="subject_ids" value="{{ s.id }}" {{ 'checked' if s.id in selected_ids }}>
+            <span>{{ s.name }}{% if s.code %} ({{ s.code }}){% endif %}</span>
+        </label>
+        {% endfor %}
+    </div>
+    <div class="mt-6 flex gap-2">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save</button>
+        <a href="{{ url_for('teachers.detail', teacher_id=teacher.id) }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Cancel</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Fee Payments{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Fee Payments</h1>
+<form method="get" class="mb-4 flex gap-2">
+    <select name="class_id" class="rounded-lg border border-slate-300 px-3 py-2">
+        <option value="">All classes</option>
+        {% for c in classes %}
+        <option value="{{ c.id }}" {{ 'selected' if class_filter == c.id }}>{{ c.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Filter</button>
+</form>
+<table class="min-w-full divide-y divide-slate-200 bg-white rounded-lg shadow border">
+    <thead class="bg-slate-50">
+        <tr>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Date</th>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Student</th>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Fee</th>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Amount</th>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Receipt</th>
+            <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Mode</th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200">
+        {% for p in payments %}
+        <tr>
+            <td class="px-4 py-3">{{ p.payment_date.strftime('%Y-%m-%d') }}</td>
+            <td class="px-4 py-3">{{ p.student.full_name if p.student else '-' }}</td>
+            <td class="px-4 py-3">{{ p.fee_structure.fee_type if p.fee_structure else '-' }}</td>
+            <td class="px-4 py-3">{{ p.amount_paid }}</td>
+            <td class="px-4 py-3">{{ p.receipt_no or '-' }}</td>
+            <td class="px-4 py-3">{{ p.payment_mode or '-' }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="px-4 py-3 text-slate-500">No payments.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('fees.index') }}" class="text-primary-600 hover:underline mt-4 block">Back to Fees</a>
+{% endblock %}

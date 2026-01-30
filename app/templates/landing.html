@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Home - School Management{% endblock %}
+{% block content %}
+<div class="text-center py-16">
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">School Management Made Simple</h1>
+    <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8">Manage students, teachers, attendance, exams, fees and reports in one place.</p>
+    <a href="{{ url_for('auth.login') }}" class="inline-block rounded-lg bg-primary-600 px-8 py-3 text-lg font-medium text-white hover:bg-primary-700 shadow-md">Get Started</a>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100">
+        <div class="text-3xl font-bold text-primary-600 mb-2">Students</div>
+        <p class="text-slate-600">Attendance, exams, results, performance, conduct and certificates.</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100">
+        <div class="text-3xl font-bold text-primary-600 mb-2">Teachers</div>
+        <p class="text-slate-600">Staff profiles, attendance, classes and subjects.</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100">
+        <div class="text-3xl font-bold text-primary-600 mb-2">Fees</div>
+        <p class="text-slate-600">Fee structure and payment tracking.</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100">
+        <div class="text-3xl font-bold text-primary-600 mb-2">Reports</div>
+        <p class="text-slate-600">Attendance, exam performance and fee collection reports.</p>
+    </div>
+</div>
+{% endblock %}

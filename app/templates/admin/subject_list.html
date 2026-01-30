@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Subjects - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">Subjects</h1>
+    <a href="{{ url_for('admin.subject_create') }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Add Subject</a>
+</div>
+<div class="bg-white rounded-lg shadow overflow-hidden border border-slate-100">
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Code</th>
+                <th class="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for s in subjects %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3 text-slate-900">{{ s.name }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ s.code or '-' }}</td>
+                <td class="px-4 py-3 text-right">
+                    <a href="{{ url_for('admin.subject_edit', subject_id=s.id) }}" class="text-primary-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

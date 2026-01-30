@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Mark Attendance - School Management{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Mark Attendance</h1>
+<form method="get" class="mb-6 flex flex-wrap gap-2 items-end">
+    <div>
+        <label for="date" class="block text-sm font-medium text-slate-700">Date</label>
+        <input type="date" id="date" name="date" value="{{ att_date or '' }}" required class="rounded-lg border border-slate-300 px-3 py-2">
+    </div>
+    <div>
+        <label for="class_id" class="block text-sm font-medium text-slate-700">Class</label>
+        <select id="class_id" name="class_id" required class="rounded-lg border border-slate-300 px-3 py-2">
+            <option value="">Select class</option>
+            {% for c in form.class_id.choices if c[0] != '' %}
+            <option value="{{ c[0] }}" {{ 'selected' if class_id == c[0] }}>{{ c[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="section" class="block text-sm font-medium text-slate-700">Section (optional)</label>
+        <input type="text" id="section" name="section" value="{{ section or '' }}" class="rounded-lg border border-slate-300 px-3 py-2" placeholder="e.g. A">
+    </div>
+    <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Load Students</button>
+</form>
+{% if students is defined and students %}
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 overflow-hidden">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="hidden" name="date" value="{{ att_date }}"/>
+    <input type="hidden" name="class_id" value="{{ class_id }}"/>
+    <input type="hidden" name="section" value="{{ section or '' }}"/>
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Admission No</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Status</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Remarks</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for s in students %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-3">{{ s.admission_no }}</td>
+                <td class="px-4 py-3">{{ s.full_name }}</td>
+                <td class="px-4 py-3">
+                    <select name="status_{{ s.id }}" class="rounded border border-slate-300 px-2 py-1">
+                        <option value="present" {{ 'selected' if s._attendance and s._attendance.status == 'present' }}>Present</option>
+                        <option value="absent" {{ 'selected' if s._attendance and s._attendance.status == 'absent' }}>Absent</option>
+                        <option value="late" {{ 'selected' if s._attendance and s._attendance.status == 'late' }}>Late</option>
+                    </select>
+                </td>
+                <td class="px-4 py-3">
+                    <input type="text" name="remarks_{{ s.id }}" value="{{ s._attendance.remarks if s._attendance and s._attendance.remarks else '' }}" class="rounded border border-slate-300 px-2 py-1 w-32" placeholder="Remarks">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="p-4 bg-slate-50">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save Attendance</button>
+    </div>
+</form>
+{% endif %}
+<div class="mt-4">
+    <a href="{{ url_for('students.index') }}" class="text-primary-600 hover:underline">Back to Students</a>
+</div>
+{% endblock %}

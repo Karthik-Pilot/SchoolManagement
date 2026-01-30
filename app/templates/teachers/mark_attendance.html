@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Mark Teacher Attendance{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">Mark Teacher Attendance</h1>
+<form method="get" class="mb-6 flex gap-2 items-end">
+    <label for="date" class="block text-sm font-medium text-slate-700">Date</label>
+    <input type="date" id="date" name="date" value="{{ att_date or '' }}" required class="rounded-lg border border-slate-300 px-3 py-2">
+    <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Load</button>
+</form>
+{% if att_date and teachers %}
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 overflow-hidden">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="hidden" name="date" value="{{ att_date }}"/>
+    <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Employee ID</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Name</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Status</th>
+                <th class="px-4 py-3 text-left text-sm font-medium text-slate-700">Remarks</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for t in teachers %}
+            <tr>
+                <td class="px-4 py-3">{{ t.employee_id }}</td>
+                <td class="px-4 py-3">{{ t.full_name }}</td>
+                <td class="px-4 py-3">
+                    <select name="status_{{ t.id }}" class="rounded border px-2 py-1">
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                        <option value="late">Late</option>
+                    </select>
+                </td>
+                <td class="px-4 py-3"><input type="text" name="remarks_{{ t.id }}" class="rounded border px-2 py-1 w-32"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="p-4 bg-slate-50">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save Attendance</button>
+    </div>
+</form>
+{% endif %}
+<a href="{{ url_for('teachers.index') }}" class="text-primary-600 hover:underline mt-4 block">Back to Teachers</a>
+{% endblock %}

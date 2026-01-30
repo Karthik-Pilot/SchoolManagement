@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - {{ student.full_name }}{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold text-slate-900 mb-6">{{ title }} - {{ student.full_name }}</h1>
+<form method="post" class="bg-white rounded-lg shadow border border-slate-100 p-6 max-w-lg space-y-4">
+    {{ form.hidden_tag() }}
+    <div>
+        <label for="type" class="block text-sm font-medium text-slate-700 mb-1">Type</label>
+        {{ form.type(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="title" class="block text-sm font-medium text-slate-700 mb-1">Title</label>
+        {{ form.title(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div>
+        <label for="description" class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+        {{ form.description(class="w-full rounded-lg border border-slate-300 px-3 py-2", rows=3) }}
+    </div>
+    <div>
+        <label for="issue_date" class="block text-sm font-medium text-slate-700 mb-1">Issue Date</label>
+        {{ form.issue_date(class="w-full rounded-lg border border-slate-300 px-3 py-2") }}
+    </div>
+    <div class="flex gap-2 pt-2">
+        <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Save</button>
+        <a href="{{ url_for('students.conduct_list', student_id=student.id) }}" class="rounded-lg bg-slate-200 px-4 py-2 hover:bg-slate-300">Cancel</a>
+    </div>
+</form>
+{% endblock %}

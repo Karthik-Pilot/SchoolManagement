@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ student.full_name }} - School Management{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-slate-900">{{ student.full_name }}</h1>
+    {% if current_user.can_manage_users() %}
+    <a href="{{ url_for('students.edit', student_id=student.id) }}" class="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Edit</a>
+    {% endif %}
+</div>
+<div class="bg-white rounded-lg shadow border border-slate-100 p-6 max-w-2xl">
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><dt class="text-sm text-slate-500">Admission No</dt><dd class="font-medium">{{ student.admission_no }}</dd></div>
+        <div><dt class="text-sm text-slate-500">Class</dt><dd class="font-medium">{{ student.school_class.name if student.school_class else '-' }}</dd></div>
+        <div><dt class="text-sm text-slate-500">Section</dt><dd class="font-medium">{{ student.section or '-' }}</dd></div>
+        <div><dt class="text-sm text-slate-500">Date of Birth</dt><dd class="font-medium">{{ student.dob.strftime('%Y-%m-%d') if student.dob else '-' }}</dd></div>
+        <div><dt class="text-sm text-slate-500">Guardian</dt><dd class="font-medium">{{ student.guardian_name or '-' }}</dd></div>
+        <div><dt class="text-sm text-slate-500">Guardian Contact</dt><dd class="font-medium">{{ student.guardian_contact or '-' }}</dd></div>
+        <div class="md:col-span-2"><dt class="text-sm text-slate-500">Address</dt><dd class="font-medium">{{ student.address or '-' }}</dd></div>
+    </dl>
+</div>
+<div class="mt-6">
+    <a href="{{ url_for('students.attendance_list', student_id=student.id) }}" class="text-primary-600 hover:underline mr-4">Attendance</a>
+    <a href="{{ url_for('students.performance', student_id=student.id) }}" class="text-primary-600 hover:underline mr-4">Performance</a>
+    <a href="{{ url_for('students.conduct_list', student_id=student.id) }}" class="text-primary-600 hover:underline">Conduct & Certificates</a>
+</div>
+{% endblock %}
